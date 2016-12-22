@@ -97,3 +97,8 @@ describe('Matchers:', () => {
     });
   });
 });
+
+// more:
+// - when NOT to use a matcher
+// - how to use the spy, e.g. with returnValue
+// - how to use it inside a class or as property
