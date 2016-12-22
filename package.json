@@ -1,6 +1,6 @@
 {
   "name": "hamjest-spy",
-  "version": "2.0.0-pre",
+  "version": "2.0.0",
   "description": "A spy for hamjest, incl. some matchers.",
   "main": "lib/index.js",
   "scripts": {
