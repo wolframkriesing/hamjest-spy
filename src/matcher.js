@@ -11,7 +11,7 @@ function WasCalledWith() {
 }
 WasCalledWith.prototype = Object.create(Matcher.prototype);
 WasCalledWith.prototype.constructor = WasCalledWith;
-WasCalledWith.prototype.matches = () => true;
+WasCalledWith.prototype.matches = (spy) => spy.wasCalled;
 WasCalledWith.prototype.describeTo = () => {};
 WasCalledWith.prototype.describeMismatch = () => {};
 
