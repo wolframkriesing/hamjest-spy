@@ -14,7 +14,8 @@ export const wasCalledWith = (...expectedArgs) => {
   WasCalledWith.prototype.constructor = WasCalledWith;
   WasCalledWith.prototype.matches = (spy) => {
     if (expectedArgs.length > 0) {
-      return equalTo(expectedArgs).matches(spy.lastCallArgs);
+      const argsToCompare = spy.lastCallArgs.slice(0, expectedArgs.length);
+      return equalTo(expectedArgs).matches(argsToCompare);
     }
     return spy.wasCalled;
   };

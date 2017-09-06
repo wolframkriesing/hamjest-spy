@@ -31,6 +31,11 @@ describe('Matchers:', () => {
         f(23, 42, {a: 1}, [0, 1]);
         assertThat(f, wasCalledWith(23, 42, {a: 1}, [0, 1]));
       });
+      it('got called with more args, than expected', () => {
+        const f = buildFunctionSpy();
+        f(1, 2);
+        assertThat(f, wasCalledWith(1));
+      });
     });
     describe('fails when the spied-on-function', () => {
       it('was not called', () => {
