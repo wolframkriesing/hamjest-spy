@@ -1,7 +1,28 @@
-import { hasProperty, equalTo, allOf, not } from 'hamjest';
+import {
+  hasProperty, equalTo, allOf, not,
+  Matcher,
+} from 'hamjest';
 
 export const wasCalled = () =>
   hasProperty('wasCalled', equalTo(true));
+
+export const wasCalledWith = (...expectedArgs) => {
+  function WasCalledWith() {
+    Matcher.call(this);
+  }
+  WasCalledWith.prototype = Object.create(Matcher.prototype);
+  WasCalledWith.prototype.constructor = WasCalledWith;
+  WasCalledWith.prototype.matches = (spy) => {
+    if (expectedArgs.length > 0) {
+      const argsToCompare = spy.lastCallArgs.slice(0, expectedArgs.length);
+      return equalTo(expectedArgs).matches(argsToCompare);
+    }
+    return spy.wasCalled;
+  };
+  WasCalledWith.prototype.describeTo = () => {};
+  WasCalledWith.prototype.describeMismatch = () => {};
+  return new WasCalledWith();
+};
 
 export const wasNotCalled = () =>
   not(wasCalled());

@@ -1,10 +1,10 @@
 {
   "name": "hamjest-spy",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "A spy for hamjest, incl. some matchers.",
   "main": "lib/index.js",
   "scripts": {
-    "test": "mocha ./src/*.spec.js --compilers js:babel-register --reporter=dot",
+    "test": "mocha ./src/*.spec.js --compilers js:babel-register",
     "prepublish": "babel src/ --out-dir lib/ --ignore *.spec.js"
   },
   "repository": {

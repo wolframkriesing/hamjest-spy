@@ -1,13 +1,14 @@
 import { assertThat, not, greaterThan } from 'hamjest';
 import {
   buildFunctionSpy,
-  wasCalled, wasNotCalled, callCountWas,
+  wasCalled, wasCalledWith,
+  wasNotCalled, callCountWas,
   firstCallArgsWere, lastCallArgsWere,
 } from './index';
 
 describe('Matchers:', () => {
   describe('`wasCalled()`', () => {
-    it('fires when spied-on function got called', () => {
+    it('passes when spied-on function got called', () => {
       const f = buildFunctionSpy();
       f();
       assertThat(f, wasCalled());
@@ -15,6 +16,42 @@ describe('Matchers:', () => {
     it('bails when spied-on function had NOT been called', () => {
       const f = buildFunctionSpy();
       assertThat(f, not(wasCalled()));
+    });
+  });
+
+  describe('`wasCalledWith()`', () => {
+    describe('passes when spied-on function', () => {
+      it('got called', () => {
+        const f = buildFunctionSpy();
+        f();
+        assertThat(f, wasCalledWith());
+      });
+      it('got called with expected arg', () => {
+        const f = buildFunctionSpy();
+        f(23, 42, {a: 1}, [0, 1]);
+        assertThat(f, wasCalledWith(23, 42, {a: 1}, [0, 1]));
+      });
+      it('got called with more args, than expected', () => {
+        const f = buildFunctionSpy();
+        f(1, 2);
+        assertThat(f, wasCalledWith(1));
+      });
+    });
+    describe('fails when the spied-on-function', () => {
+      it('was not called', () => {
+        const f = buildFunctionSpy();
+        assertThat(f, not(wasCalledWith()));
+      });
+      it('was not called with expected args', () => {
+        const f = buildFunctionSpy();
+        f();
+        assertThat(f, not(wasCalledWith(23)));
+      });
+      it('was not called with the expected 2nd arg', () => {
+        const f = buildFunctionSpy();
+        f(1);
+        assertThat(f, not(wasCalledWith(1, 2)));
+      });
     });
   });
 
