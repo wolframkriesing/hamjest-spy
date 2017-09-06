@@ -6,16 +6,22 @@ import {
 export const wasCalled = () =>
   hasProperty('wasCalled', equalTo(true));
 
-function WasCalledWith() {
-  Matcher.call(this);
-}
-WasCalledWith.prototype = Object.create(Matcher.prototype);
-WasCalledWith.prototype.constructor = WasCalledWith;
-WasCalledWith.prototype.matches = (spy) => spy.wasCalled;
-WasCalledWith.prototype.describeTo = () => {};
-WasCalledWith.prototype.describeMismatch = () => {};
-
-export const wasCalledWith = () => new WasCalledWith();
+export const wasCalledWith = (...expectedArgs) => {
+  function WasCalledWith() {
+    Matcher.call(this);
+  }
+  WasCalledWith.prototype = Object.create(Matcher.prototype);
+  WasCalledWith.prototype.constructor = WasCalledWith;
+  WasCalledWith.prototype.matches = (spy) => {
+    if (expectedArgs.length > 0) {
+      return spy.lastCallArgs[0] === expectedArgs[0];
+    }
+    return spy.wasCalled;
+  };
+  WasCalledWith.prototype.describeTo = () => {};
+  WasCalledWith.prototype.describeMismatch = () => {};
+  return new WasCalledWith();
+};
 
 export const wasNotCalled = () =>
   not(wasCalled());
