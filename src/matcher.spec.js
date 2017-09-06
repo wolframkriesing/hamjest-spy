@@ -20,15 +20,17 @@ describe('Matchers:', () => {
   });
 
   describe('`wasCalledWith()`', () => {
-    it('passes when spied-on function got called', () => {
-      const f = buildFunctionSpy();
-      f();
-      assertThat(f, wasCalledWith());
-    });
-    it('passes when spied-on function got called with expected first arg', () => {
-      const f = buildFunctionSpy();
-      f(42);
-      assertThat(f, wasCalledWith(42));
+    describe('passes when spied-on function', () => {
+      it('got called', () => {
+        const f = buildFunctionSpy();
+        f();
+        assertThat(f, wasCalledWith());
+      });
+      it('got called with expected arg', () => {
+        const f = buildFunctionSpy();
+        f(23, 42, {a: 1}, [0, 1]);
+        assertThat(f, wasCalledWith(23, 42, {a: 1}, [0, 1]));
+      });
     });
     describe('fails when the spied-on-function', () => {
       it('was not called', () => {
