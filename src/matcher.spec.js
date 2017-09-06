@@ -30,14 +30,21 @@ describe('Matchers:', () => {
       f(42);
       assertThat(f, wasCalledWith(42));
     });
-    it('fails when spied-on function was not called', () => {
-      const f = buildFunctionSpy();
-      assertThat(f, not(wasCalledWith()));
-    });
-    it('fails when spied-on function was not called with expected args', () => {
-      const f = buildFunctionSpy();
-      f();
-      assertThat(f, not(wasCalledWith(23)));
+    describe('fails when the spied-on-function', () => {
+      it('was not called', () => {
+        const f = buildFunctionSpy();
+        assertThat(f, not(wasCalledWith()));
+      });
+      it('was not called with expected args', () => {
+        const f = buildFunctionSpy();
+        f();
+        assertThat(f, not(wasCalledWith(23)));
+      });
+      it('was not called with the expected 2nd arg', () => {
+        const f = buildFunctionSpy();
+        f(1);
+        assertThat(f, not(wasCalledWith(1, 2)));
+      });
     });
   });
 

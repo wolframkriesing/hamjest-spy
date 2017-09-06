@@ -13,6 +13,10 @@ export const wasCalledWith = (...expectedArgs) => {
   WasCalledWith.prototype = Object.create(Matcher.prototype);
   WasCalledWith.prototype.constructor = WasCalledWith;
   WasCalledWith.prototype.matches = (spy) => {
+    if (expectedArgs.length > 1) {
+      return spy.lastCallArgs[0] === expectedArgs[0] &&
+        spy.lastCallArgs[1] === expectedArgs[1];
+    }
     if (expectedArgs.length > 0) {
       return spy.lastCallArgs[0] === expectedArgs[0];
     }
