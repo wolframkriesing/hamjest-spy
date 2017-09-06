@@ -1,7 +1,20 @@
-import { hasProperty, equalTo, allOf, not } from 'hamjest';
+import {
+  hasProperty, equalTo, allOf, not,
+  Matcher,
+} from 'hamjest';
 
 export const wasCalled = () =>
   hasProperty('wasCalled', equalTo(true));
+
+function WasCalledWith() {
+  Matcher.call(this);
+}
+WasCalledWith.prototype = Object.create(Matcher.prototype);
+WasCalledWith.prototype.constructor = WasCalledWith;
+WasCalledWith.prototype.matches = () => true;
+WasCalledWith.prototype.describeTo = () => {};
+
+export const wasCalledWith = () => new WasCalledWith();
 
 export const wasNotCalled = () =>
   not(wasCalled());

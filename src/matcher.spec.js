@@ -1,7 +1,8 @@
 import { assertThat, not, greaterThan } from 'hamjest';
 import {
   buildFunctionSpy,
-  wasCalled, wasNotCalled, callCountWas,
+  wasCalled, wasCalledWith,
+  wasNotCalled, callCountWas,
   firstCallArgsWere, lastCallArgsWere,
 } from './index';
 
@@ -15,6 +16,14 @@ describe('Matchers:', () => {
     it('bails when spied-on function had NOT been called', () => {
       const f = buildFunctionSpy();
       assertThat(f, not(wasCalled()));
+    });
+  });
+
+  describe('`wasCalledWith()`', () => {
+    it('passes when spied-on function got called', () => {
+      const f = buildFunctionSpy();
+      f();
+      assertThat(f, wasCalledWith());
     });
   });
 
