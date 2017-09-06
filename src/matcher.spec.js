@@ -7,7 +7,7 @@ import {
 
 describe('Matchers:', () => {
   describe('`wasCalled()`', () => {
-    it('fires when spied-on function got called', () => {
+    it('passes when spied-on function got called', () => {
       const f = buildFunctionSpy();
       f();
       assertThat(f, wasCalled());
