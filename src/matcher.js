@@ -13,6 +13,7 @@ WasCalledWith.prototype = Object.create(Matcher.prototype);
 WasCalledWith.prototype.constructor = WasCalledWith;
 WasCalledWith.prototype.matches = () => true;
 WasCalledWith.prototype.describeTo = () => {};
+WasCalledWith.prototype.describeMismatch = () => {};
 
 export const wasCalledWith = () => new WasCalledWith();
 
