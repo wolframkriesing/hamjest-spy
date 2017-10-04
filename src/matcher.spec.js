@@ -36,6 +36,12 @@ describe('Matchers:', () => {
         f(1, 2);
         assertThat(f, wasCalledWith(1));
       });
+      it('got called with right and wrong args', () => {
+        const f = buildFunctionSpy();
+        f(1, 2);
+        f();
+        assertThat(f, wasCalledWith(1, 2));
+      });
     });
     describe('fails when', () => {
       it('the spy is not a spy', () => {

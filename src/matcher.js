@@ -1,5 +1,5 @@
 import {
-  hasProperty, equalTo, allOf, not,
+  hasProperty, equalTo, allOf, not, hasItem,
   Matcher,
 } from 'hamjest';
 
@@ -10,11 +10,13 @@ export const wasCalledWith = (...expectedArgs) => {
   return {
     matches: (spy) => {
       if (expectedArgs.length > 0) {
-        const argsToCompare = spy.lastCallArgs.slice(0, expectedArgs.length);
-        return equalTo(expectedArgs).matches(argsToCompare);
+        const allCallArgs = spy.allCallsArgs;
+        const argsToCompare = allCallArgs
+          .map(oneCallsArgs => oneCallsArgs.slice(0, expectedArgs.length));
+        return hasItem(expectedArgs).matches(argsToCompare);
       }
       return spy.wasCalled;
-    }
+    },
   };
 };
 
