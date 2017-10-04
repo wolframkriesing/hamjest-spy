@@ -2,11 +2,10 @@ import {
   hasProperty, equalTo, allOf, not, hasItem,
   Matcher,
 } from 'hamjest';
+import {isSpy} from './spy';
 
 export const wasCalled = () =>
   hasProperty('wasCalled', equalTo(true));
-
-const isSpy = (spy) => spy && 'allCallsArgs' in spy;
 
 export const wasCalledWith = (...expectedArgs) => {
   return {

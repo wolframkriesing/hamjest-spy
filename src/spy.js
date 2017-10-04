@@ -14,3 +14,5 @@ export const buildFunctionSpy = ({ returnValue = void 0 } = {}) => {
   spy.firstCallArgs = [];
   return spy;
 };
+
+export const isSpy = (spy) => spy && 'allCallsArgs' in spy;
