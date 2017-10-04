@@ -1,4 +1,4 @@
-import { assertThat, not, greaterThan } from 'hamjest';
+import { assertThat, not, greaterThan, containsString } from 'hamjest';
 import {
   buildFunctionSpy,
   wasCalled, wasCalledWith,
@@ -63,6 +63,18 @@ describe('Matchers:', () => {
         const f = buildFunctionSpy();
         f(1);
         assertThat(f, not(wasCalledWith(1, 2)));
+      });
+    });
+    describe('WHEN it fails', () => {
+      it('has a readable error message', () => {
+        const f = buildFunctionSpy();
+        f();
+        try {
+          assertThat(f, wasCalledWith(42));
+        } catch (e) {
+          assertThat(e.message, containsString('Expected: was called with [<42>]'));
+          assertThat(e.message, containsString('but: was called with one of [[]]'));
+        }
       });
     });
   });

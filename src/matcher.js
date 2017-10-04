@@ -6,9 +6,14 @@ import {
 export const wasCalled = () =>
   hasProperty('wasCalled', equalTo(true));
 
+const isSpy = (spy) => spy && 'allCallsArgs' in spy;
+
 export const wasCalledWith = (...expectedArgs) => {
   return {
     matches: (spy) => {
+      if (!isSpy(spy)) {
+        return false;
+      }
       if (expectedArgs.length > 0) {
         const allCallArgs = spy.allCallsArgs;
         const argsToCompare = allCallArgs
@@ -16,6 +21,18 @@ export const wasCalledWith = (...expectedArgs) => {
         return hasItem(expectedArgs).matches(argsToCompare);
       }
       return spy.wasCalled;
+    },
+    describeTo: function (description) {
+      description
+        .append('was called with ')
+        .appendDescriptionOf(expectedArgs)
+      ;
+    },
+    describeMismatch: function(actual, description) {
+      description
+        .append('was called with one of ')
+        .appendDescriptionOf(actual.allCallsArgs)
+      ;
     },
   };
 };
