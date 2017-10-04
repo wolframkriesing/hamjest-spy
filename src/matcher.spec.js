@@ -37,6 +37,12 @@ describe('Matchers:', () => {
         assertThat(f, wasCalledWith(1));
       });
     });
+    describe('fails when', () => {
+      it('the spy is not a spy', () => {
+        const noSpy = null;
+        assertThat(noSpy, not(wasCalledWith(1, 2)));
+      });
+    });
     describe('fails when the spied-on-function', () => {
       it('was not called', () => {
         const f = buildFunctionSpy();

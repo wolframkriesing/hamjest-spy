@@ -8,9 +8,9 @@ export const buildFunctionSpy = ({ returnValue = void 0 } = {}) => {
     return returnValue;
   };
   spy.wasCalled = false;
-  spy.lastCallArgs = null;
+  spy.lastCallArgs = [];
   spy.allCallsArgs = [];
   spy.callCount = 0;
-  spy.firstCallArgs = null;
+  spy.firstCallArgs = [];
   return spy;
 };
