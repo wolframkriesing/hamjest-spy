@@ -27,7 +27,7 @@ See [the tests][tests] for how I use the spy and the according matchers.
 
 # Features
 
-Matchers:
+```Matchers:
   `wasCalled()`
     ✓ passes when spied-on function got called
     ✓ bails when spied-on function had NOT been called
@@ -64,7 +64,7 @@ Matchers:
   `callCountWas()`
     ✓ passes when spy got called once
     ✓ passes for multiple calls
-
+```
 
 # Development
 
